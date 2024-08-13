@@ -15,7 +15,6 @@
  */
 
 import Foundation
-import LoggerAPI
 
 /**
  Query Parameter Decoder decodes a `[String: String]` object to a `Decodable` object instance. The decode function takes the `Decodable` object as a parameter to decode the dictionary into.
@@ -125,7 +124,7 @@ public class QueryDecoder: Coder, Decoder, BodyDecoder {
         }
         let fieldName = Coder.getFieldName(from: codingPath)
         let fieldValue = dictionary[fieldName]
-        Log.verbose("fieldName: \(fieldName), fieldValue: \(String(describing: fieldValue))")
+        print("fieldName: \(fieldName), fieldValue: \(String(describing: fieldValue))")
 
         switch type {
         /// Bool
@@ -272,7 +271,7 @@ public class QueryDecoder: Coder, Decoder, BodyDecoder {
             }
             return try decodeType(fieldValue?.decodable(T.self), to: T.self)
         default:
-            Log.verbose("Decoding Custom Type: \(T.Type.self)")
+            print("Decoding Custom Type: \(T.Type.self)")
             if fieldName.isEmpty {
                 return try T(from: self)
             } else {
@@ -329,7 +328,7 @@ public class QueryDecoder: Coder, Decoder, BodyDecoder {
     private func decodingError() -> DecodingError {
         let fieldName = Coder.getFieldName(from: codingPath)
         let errorMsg = "Could not process field named '\(fieldName)'."
-        Log.error(errorMsg)
+        print(errorMsg)
         let errorCtx = DecodingError.Context(codingPath: codingPath, debugDescription: errorMsg)
         return DecodingError.dataCorrupted(errorCtx)
     }

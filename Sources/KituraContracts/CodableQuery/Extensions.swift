@@ -15,7 +15,6 @@
  */
 
 import Foundation
-import LoggerAPI
 
 /// Codable String Conversion Extension.
 extension String {
@@ -281,7 +280,7 @@ extension String {
             return dateArray
         #if swift(>=5) && !os(Linux)
         @unknown default:
-            Log.error("Decoding strategy not found")
+            print("Decoding strategy not found")
             fatalError()
         #endif
         }
@@ -325,7 +324,7 @@ extension String {
         let valueReplacingPlus = value.replacingOccurrences(of: "+", with: " ")
         let decodedValue = valueReplacingPlus.removingPercentEncoding
         if decodedValue == nil {
-            Log.warning("Unable to decode query parameter \(key) (coded value: \(valueReplacingPlus)")
+            print("Unable to decode query parameter \(key) (coded value: \(valueReplacingPlus)")
         }
         return (key: key, value: decodedValue ?? valueReplacingPlus)
     }
